@@ -12,6 +12,118 @@ SECURITY: There are security fixes in the release.
 --------------------------------------------------------------------------------
 
 ================================================================================
+Redis 6.0.4     Released Fri May 22 13:19:38 CEST 2020
+================================================================================
+
+Upgrade urgency HIGH: many bugs fixed in the path of bringing Redis 6 to
+                      battle-tested level. Details follows.
+
+Hi all, this new release in the Redis 6 saga includes many fixes
+in different areas. Nothing is terrible per se, but many are
+imporant:
+
+* Diskless load with TLS connections: avoid closing the socket without reasons.
+* Fix PSYNC2 meaning offset bug with chained replicas.
+* STRALGO LCS crash with malformed arguments fixed.
+* Fixed wrong "reply_bytes" math in 32 bit systems generating assertion.
+* Active defrag rare race fixed.
+* Improve PSYNC2 tests.
+
+The full list of commits:
+
+Madelyn Olson in commit e201f83ce:
+ EAGAIN for tls during diskless load
+ 1 file changed, 4 insertions(+)
+
+Qu Chen in commit 58fc456cb:
+ Disconnect chained replicas when the replica performs PSYNC with the master always to avoid replication offset mismatch between master and chained replicas.
+ 2 files changed, 60 insertions(+), 3 deletions(-)
+
+hwware in commit 3febc5c29:
+ using moreargs variable
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+hwware in commit 8d6738559:
+ fix server crash for STRALGO command
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+ShooterIT in commit 7a35eec54:
+ Replace addDeferredMultiBulkLength with addReplyDeferredLen in comment
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Yossi Gottlieb in commit f93e1417b:
+ TLS: Improve tls-protocols clarity in redis.conf.
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+ShooterIT in commit d0c9e4454:
+ Fix reply bytes calculation error
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+zhaozhao.zz in commit 1cde6a060:
+ Tracking: flag CLIENT_TRACKING_BROKEN_REDIR when redir broken
+ 1 file changed, 1 insertion(+)
+
+Oran Agra in commit 436be3498:
+ fix a rare active defrag edge case bug leading to stagnation
+ 4 files changed, 146 insertions(+), 23 deletions(-)
+
+Oran Agra in commit f9d2ffdc5:
+ improve DEBUG MALLCTL to be able to write to write only fields.
+ 1 file changed, 27 insertions(+), 7 deletions(-)
+
+hujie in commit d7968ee92:
+ fix clear USER_FLAG_ALLCOMMANDS flag in acl
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+ShooterIT in commit a902e6b25:
+ Redis Benchmark: generate random test data
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+hwware in commit 9564ed7c3:
+ Redis-Benchmark: avoid potentical memmory leaking
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+WuYunlong in commit 2e4182743:
+ Handle keys with hash tag when computing hash slot using tcl cluster client.
+ 1 file changed, 23 insertions(+), 2 deletions(-)
+
+WuYunlong in commit eb2c8b2c6:
+ Add a test to prove current tcl cluster client can not handle keys with hash tag.
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+ShooterIT in commit 928e6976b:
+ Use dictSize to get the size of dict in dict.c
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Madelyn Olson in commit cdcf5af5a:
+ Converge hash validation for adding and removing
+ 1 file changed, 21 insertions(+), 14 deletions(-)
+
+Benjamin Sergeant in commit e8b09d220:
+ do not handle --cluster-yes for cluster fix mode
+ 1 file changed, 16 insertions(+), 7 deletions(-)
+
+Benjamin Sergeant in commit 57b4fb0d8:
+ fix typo ...
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Benjamin Sergeant in commit 29f25e411:
+ Redis-cli 6.0.1 `--cluster-yes` doesn't work (fix #7246)
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+Oran Agra in commit 00d8b92b8:
+ fix valgrind test failure in replication test
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Oran Agra in commit 5e17e6276:
+ add regression test for the race in #7205
+ 1 file changed, 52 insertions(+)
+
+antirez in commit 96e7c011e:
+ Improve the PSYNC2 test reliability.
+ 1 file changed, 33 insertions(+), 15 deletions(-)
+
+================================================================================
 Redis 6.0.3     Released Sat May 16 18:10:21 CEST 2020
 ================================================================================
 
